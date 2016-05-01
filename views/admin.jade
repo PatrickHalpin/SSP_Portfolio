@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  div.pure-g
+    div.pure-u-1-4
+
+    div.pure-u-1-2 
+        h1.welcome Admin
+    
+    div.pure-u-1-1.log
+
+        if yourName && yourPassword
+            p Please login
+        else
+            div.pure-u-1-1.log
+                h2.admin Upload Works
+                form(method='POST', action='/uploadFile', enctype='multipart/form-data')
+                    input(type='file', name='theFile')
+                    input(type="text", name="newTitle",placeholder="Title")
+                    input(type="text", name="desc",placeholder="Description")
+                    input(type='submit', value='Upload') 
+            div.pure-u-1-1.log   
+                h2.adminU Uploaded Works         
+                ul
+                    for file,i in theFiles
+                        li #{file.filename}
+                            a(href="/deleteFile/#{file._id}") delete
+
+                            form(method='POST' action="/edit/#{file._id}")
+                                input(type="text", name="editTitle",placeholder="#{file.newTitle}")
+                                input(type="text", name="editDesc",placeholder="#{file.desc}")
+                                input(type='submit', value='Edit')
